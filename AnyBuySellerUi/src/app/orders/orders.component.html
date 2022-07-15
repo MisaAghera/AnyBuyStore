@@ -1,0 +1,292 @@
+<!-- details model-->
+<div class="container " style="padding-top:80px ;padding-left: 250px;">
+    <div class="row">
+        <div class="col-sm-1">
+            <div class="dropdown">
+                <button class="dropdown-toggle button-style" type="button" id="dropdownMenu1" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-sort icon-style"></i>
+                </button>
+                <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+                    <li class="dropdown-submenu">
+                        <a class="dropdown-item" tabindex="-1">price</a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-item"><a tabindex="-1" (click)="OnClickPriceHighToLow()">high to low</a>
+                            </li>
+                            <li class="dropdown-item"><a tabindex="-1" (click)="OnClickPriceLowToHigh()">low to high</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown-submenu">
+                        <a class="dropdown-item" tabindex="-1">productName</a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-item"><a tabindex="-1" (click)="OnClickAscendingName()">ascending</a>
+                            </li>
+                            <li class="dropdown-item"><a tabindex="-1" (click)="OnClicDescendingName()">descending</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-1">
+            <div class="dropdown">
+                <button class="dropdown-toggle button-style" type="button" id="dropdownMenu1" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-filter icon-style"></i>
+                </button>
+                <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+                    <li class="dropdown-submenu">
+                        <a class="dropdown-item" tabindex="-1">month</a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-item"><a tabindex="-1"
+                                    (click)="displayProductSoldThisMonth(1)">january</a>
+                            </li>
+                            <li class="dropdown-item"><a tabindex="-1"
+                                    (click)="displayProductSoldThisMonth(2)">february</a>
+                            </li>
+                            <li class="dropdown-item"><a tabindex="-1"
+                                    (click)="displayProductSoldThisMonth(3)">march</a>
+                            </li>
+                            <li class="dropdown-item"><a tabindex="-1"
+                                    (click)="displayProductSoldThisMonth(4)">april</a>
+                            </li>
+                            <li class="dropdown-item"><a tabindex="-1" (click)="displayProductSoldThisMonth(5)">may</a>
+                            </li>
+                            <li class="dropdown-item"><a tabindex="-1" (click)="displayProductSoldThisMonth(6)">june</a>
+                            </li>
+                            <li class="dropdown-item"><a tabindex="-1" (click)="displayProductSoldThisMonth(7)">july</a>
+                            </li>
+                            <li class="dropdown-item"><a tabindex="-1"
+                                    (click)="displayProductSoldThisMonth(8)">august</a>
+                            </li>
+                            <li class="dropdown-item"><a tabindex="-1"
+                                    (click)="displayProductSoldThisMonth(9)">september</a>
+                            </li>
+                            <li class="dropdown-item"><a tabindex="-1"
+                                    (click)="displayProductSoldThisMonth(10)">october</a>
+                            </li>
+                            <li class="dropdown-item"><a tabindex="-1"
+                                    (click)="displayProductSoldThisMonth(11)">november</a>
+                            </li>
+                            <li class="dropdown-item"><a tabindex="-1"
+                                    (click)="displayProductSoldThisMonth(12)">december</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-1">
+            <button class="button-style " (click)="getOrderDetails(userId)"><i
+                    class="fa fa-times icon-style"></i></button>
+        </div>
+        <div class="">
+            <input type="number" #Year (keyup.enter)="onSubmitFilterByYear(Year.value)"
+                (blur)="onSubmitFilterByYear(Year.value); Year.value='' " placeholder="year">
+            <!-- <button type="button" (click)="onSubmitFilterByYear(Year.value)">Search</button> -->
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Order Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form [formGroup]="newOrderDetailsForm" autocomplete="off" novalidate
+                (ngSubmit)="onEditSubmit(newOrderDetailsForm.value) ">
+                <div class="modal-body">
+                    <div class="col-lg-8">
+                        <div class="card mb-4 card-style">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label for="id" class="mb-0">id</label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" id="id" class="form-control" formControlName="id"
+                                            readonly="readonly" value="0" />
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label for="productId" class="mb-0">productId</label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" id="productId" class="form-control"
+                                            formControlName="productId" readonly="readonly" value="0" />
+                                    </div>
+                                </div>
+                                <hr>
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label for="orderId" class="mb-0">orderId</label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" id="orderId" class="form-control" formControlName="orderId"
+                                            readonly="readonly" value="0" />
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label for="discountId" class="mb-0">discountId</label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" id="discountId" class="form-control"
+                                            formControlName="discountId" readonly="readonly" value="0" />
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label for="quantity" class="mb-0">quantity</label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" id="quantity" class="form-control" formControlName="quantity"
+                                            readonly="readonly" value="0" />
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label for="status" class="mb-0">status</label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <select name="status" id="status" formControlName="status" class="form-select">
+                                            <option value="preparing">preparing</option>
+                                            <option value="shipped">shipped</option>
+                                            <option value="delivered">delivered</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label for="price" class="mb-0">price</label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" id="price" class="form-control" formControlName="price"
+                                            readonly="readonly" value="0" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-secondary">submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--end  details model-->
+
+<div class="container mt-3 mb-4" style="padding-left: 250px;">
+    <div class="container mt-3 mb-4">
+        <div class="col-lg-14 mt-4 mt-lg-0">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="user-dashboard-info-box table-responsive mb-0 bg-white p-4 shadow-sm">
+                        <table class="table manage-candidates-top mb-0">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Id</th>
+                                    <th class="text-center">productId</th>
+                                    <th class="text-center">product name</th>
+                                    <th class="text-center">orderId</th>
+                                    <th class="text-center">discountId</th>
+                                    <th class="text-center">quantity </th>
+                                    <th class="text-center">status</th>
+                                    <th class="text-center">price</th>
+                                    <th class="text-center" colspan="2">Address</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="candidates-list" *ngFor="let order of OrderDetailsList | filter: filterTerm | paginate
+                          : {
+                              itemsPerPage: tableSize,
+                              currentPage: page,
+                              totalItems: count
+                            };
+                            let i = index">
+                                    <!-- <td class="title"> -->
+                                    <td class="candidate-list-favourite-time text-center">
+                                        <span class="candidate-list-time order-1">{{order.id}}</span>
+                                    </td>
+                                    <td class="candidate-list-favourite-time text-center">
+                                        <span class="candidate-list-time order-1">{{order.productId}}</span>
+                                    </td>
+                                    <td class="candidate-list-favourite-time text-center">
+                                        <span class="candidate-list-time order-1">{{order.productName}}</span>
+                                    </td>
+                                    <td class="candidate-list-favourite-time text-center">
+                                        <span class="candidate-list-time order-1">{{order.orderId}}</span>
+                                    </td>
+                                    <td class="candidate-list-favourite-time text-center">
+                                        <span class="candidate-list-time order-1">{{order.discountId}}</span>
+                                    </td>
+                                    <td class="candidate-list-favourite-time text-center">
+                                        <span class="candidate-list-time order-1">{{order.quantity}}</span>
+                                    </td>
+                                    <td class="candidate-list-favourite-time text-center">
+                                        <span class="candidate-list-time order-1">{{order.status}}</span>
+                                    </td>
+                                    <td class="candidate-list-favourite-time text-center">
+                                        <span class="candidate-list-time order-1">{{order.price *
+                                            order.quantity|currency:"INR"}}</span>
+                                    </td>
+                                    <td colspan="2" class="text-center" class="candidate-list-favourite-time text-center">
+                                        <p>
+                                        <button class="text-center" (click)="getOrderAddress(order.id)" class="btn" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                            click
+                                          </button>
+                                        </p>
+                                        <div class="collapse" id="collapseExample">
+                                          <div class="card card-body" class="text-center">
+                                            {{AddressDetails?.house}}, {{AddressDetails?.street}}, {{AddressDetails?.city}},
+                                            {{AddressDetails?.state}}, {{AddressDetails?.country}},pin : {{AddressDetails?.zipCode}} 
+                                          </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <ul class="list-unstyled mb-0 d-flex justify-content-front">
+                                            <li><a (click)="getOrderDetailById(order.id)" class="text-info"
+                                                    data-toggle="tooltip" title="" data-original-title="Edit"
+                                                    aria-label="Close" data-bs-target="#staticBackdrop"
+                                                    data-bs-toggle="modal"><i class="fa fa-pencil"></i></a></li>
+                                            <li><a (click)="onDeleteOrderDetails(order.id)" class="text-danger"
+                                                    data-toggle="tooltip" title="" data-original-title="Delete"><i
+                                                        class="fa fa-trash"></i></a></li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" class="text-center">
+                                        <h3>net profit</h3>
+                                    </td>
+                                    <td colspan="4">
+                                        <h3>{{netProfit|currency:"INR"}}</h3>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center">
+            <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+            </pagination-controls>
+        </div>
+    </div>
+</div>

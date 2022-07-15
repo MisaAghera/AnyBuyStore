@@ -1,0 +1,45 @@
+
+<div class="container mt-5">
+    <div class="card custom-style">
+        <div class="alert alert-success" id="success-alert" role="alert" style="display: none;">
+        </div>
+        <div class="alert alert-danger" role="alert" id="danger-alert" style="display: none;">
+        </div>
+        <div class="card-body">
+          <h1 class="card-title">Login</h1>
+          <form [formGroup]="loginForm" autocomplete="off" novalidate (ngSubmit)="loginUser(loginForm.value)">
+            <div class="mb-3 row">
+              <label for="username" class="col-form-label col-sm-2">Username:</label>
+              <div class="col-md-5">
+                <input type="text" id="username" formControlName="username" class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && f['username'].errors }" />
+                <div *ngIf="submitted && f['username'].errors" class="invalid-feedback">
+                  <div *ngIf="f['username'].errors['required']">username is required</div>
+                </div>
+              </div>
+            </div>
+            <div class="mb-3 row">
+              <label for="password" class="col-form-label col-sm-2">Password:</label>
+              <div class="col-md-5">
+                <input type="password" id="password" formControlName="password" class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && f['password'].errors }" />
+                <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+                  <div *ngIf="f['password'].errors['required']">password is required</div>
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="mb-3 row">
+              <div class="col-md-1">
+                <button type="submit" class="btn btn-success float-right">Login</button>
+              </div>
+              <div class="col-md-1">
+                <button type="button" (click)="onReset()" class="btn btn-warning float-right">
+                  Reset
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>    
+</div> 

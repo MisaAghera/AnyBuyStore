@@ -1,0 +1,112 @@
+import { Component, OnInit } from '@angular/core';
+import { UserModel } from '../shared/models/user-model';
+import { UserService } from '../shared/services/user.service';
+import { AuthenticationService } from '../shared/services/authentication.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { FormControl, AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CustomValidation } from "../shared/providers/custom-validators";
+import { Router, ActivatedRoute } from '@angular/router';
+
+@Component({
+  selector: 'app-profile-details',
+  templateUrl: './profile-details.component.html',
+  styleUrls: ['./profile-details.component.css']
+})
+
+export class ProfileDetailsComponent implements OnInit {
+  UserDetials: UserModel = new UserModel;
+
+  userForm: FormGroup = new FormGroup({
+    id: new FormControl(''),
+    userName: new FormControl(''),
+    gender: new FormControl(''),
+    age: new FormControl(''),
+    email: new FormControl(''),
+    phoneNumber: new FormControl('')
+  });
+
+  submitted = false;
+  constructor(public userService: UserService, private router: Router, private authService: AuthenticationService, private formBuilder: FormBuilder) { }
+
+  getuserDetails(id: number) {
+    this.userService.getById(id).subscribe(async result => {
+      this.UserDetials = result;
+      await this.setValuesInForm(result);
+    });
+  }
+
+  get f(): { [key: string]: AbstractControl } {
+    return this.userForm.controls;
+  }
+
+  updateUser = (updateFormValue: any) => {
+    this.submitted = true;
+    if (this.userForm.invalid) {
+      return;
+    }
+    const formValues = { ...updateFormValue };
+    var user: InModel = new InModel();
+    user.In.id = Number(localStorage.getItem('userId'));
+    user.In.userName = formValues.userName;
+    user.In.email = formValues.email;
+    user.In.phoneNumber = formValues.phoneNumber;
+
+    if (formValues.age != '')
+      user.In.age = formValues.age;
+    if (formValues.gender != '' && formValues.gender != null)
+      user.In.gender = formValues.gender;
+
+    this.userService.update(user)
+      .subscribe({
+        next: (_) => {
+          alert("profile updated successfully");
+        },
+        error: (err: HttpErrorResponse) => {
+          document.getElementById("danger-alert")!.style.display = "block";
+          document.getElementById("danger-alert")!.innerHTML = " unsuccessfull, please check the details";
+        }
+      })
+  }
+
+  onReset(): void {
+    this.submitted = false;
+    this.userForm.reset();
+  }
+
+  setValuesInForm(res: any) {
+    this.userForm.controls["id"].setValue(res.id);
+    this.userForm.controls['id'].disable();
+    this.userForm.controls["userName"].setValue(res.userName);
+    this.userForm.controls["age"].setValue(res.age);
+    this.userForm.controls["gender"].setValue(res.gender);
+    this.userForm.controls["email"].setValue(res.email);
+    this.userForm.controls["phoneNumber"].setValue(res.phoneNumber);
+  }
+
+  ngOnInit(): void {
+    var userId = Number(localStorage.getItem('userId'));
+    this.getuserDetails(userId);
+    this.userForm = this.formBuilder.group(
+      {
+        id:[''],
+        userName: ['', [Validators.required]],
+        age: [''],
+        gender: [''],
+        phoneNumber: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern("[0-9 ]{10}")
+          ]
+        ],
+        email: ['', [Validators.required, Validators.email]],
+      },
+    );
+  }
+}
+
+class InModel {
+  In: UserModel = new UserModel();
+}
+
+

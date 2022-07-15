@@ -1,0 +1,62 @@
+<section class="page-header">
+  <div class="overly"></div>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-6">
+        <div class="content text-center">
+          <h1 class="mb-3">Product</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="single-product">
+  <div class="container">
+    <div class="alert alert-success custom-style" id="success-alert" role="alert" style="display: none;">
+    </div>
+    <div class="alert alert-danger custom-style" role="alert" id="danger-alert" style="display: none;">
+    </div>
+    <div class="row">
+      <div class="col-md-5">
+        <div class="single-product-slider">
+          <div class="carousel slide" style="margin-top: 50px;" data-ride="carousel" id="single-product-slider">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img class="img-fluid" [src]="createImgPath(ProductDetails!.imageUrl!)" class="card-img-top"
+                  alt="product picture">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-7">
+        <div class="single-product-details mt-5 mt-lg-0">
+          <h2>{{ProductDetails.name}}</h2>
+          <hr>
+          <h6 class="product-price"><del>{{(DiscountDetails.value+ProductDetails.price)| currency: 'INR'}}</del></h6>
+          <h3 class="product-price">{{ProductDetails.price | currency: 'INR' }} </h3>
+          <h5>{{DiscountDetails.value| currency: 'INR'}} OFF</h5>
+          <p class="product-description my-4 ">
+            {{ProductDetails.description}}
+          </p>
+          <form class="cart" [formGroup]="cartForm" autocomplete="off" novalidate
+            (ngSubmit)="onAddToCart(cartForm.value) ">
+            <div class="quantity d-flex align-items-center">
+              <input type="number" class="input-text qty text form-control w-25 mr-3" step="1" min="1"
+                max="{{ProductDetails.quantity}}" name="quantity" formControlName="quantity" value="1" title="Qty"
+                size="4" onKeyDown="return false">
+              <button type="submit" class="btn btn-main btn-small">Add to cart</button>
+            </div>
+          </form>
+          <br><br>
+          <div class="products-meta mt-4">
+            <div class="product-category d-flex align-items-center">
+              <span class="font-weight-bold text-capitalize product-meta-title">brand :</span>
+              {{ProductDetails.brand}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

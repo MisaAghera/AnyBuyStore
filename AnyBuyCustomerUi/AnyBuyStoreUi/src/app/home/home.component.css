@@ -1,0 +1,22 @@
+.card-body {
+    min-height: 300px;
+    min-width: 300px;
+    margin-right: 5px;
+}
+.categoryCard{
+    border-color: white;
+}
+.SubcategoryCard{
+    border-color: white;
+    
+}
+.heading{
+    padding :2%;
+}
+.marginLess{
+    padding-top: 0%;
+    padding-bottom: 0%;
+}
+.heightStyle{
+    height: 100px;
+}

@@ -1,0 +1,103 @@
+<code>
+    <!--category details model-->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">category Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form [formGroup]="newCategoryForm" autocomplete="off" novalidate
+                    (ngSubmit)="onAddEditSubmit(newCategoryForm.value) ">
+                    <div class="modal-body"  >
+                        <div class="col-lg-8">
+                            <div class="card mb-4 card-style" >
+                                <div class="card-body" >
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <label for="price" class="mb-0">category id</label>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <input type="text" id="categoryId"  class="form-control" formControlName="categoryId" readonly="readonly" value="0" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <label for="price" class="mb-0">category name</label>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <input type="text" id="categoryName" class="form-control" formControlName="categoryName" aria-label="categoryName" [ngClass]="{ 'is-invalid': submitted && f['categoryName'].errors }"/>
+                                                <div *ngIf="submitted && f['categoryName'].errors" class="invalid-feedback">
+                                                    <div *ngIf="f['categoryName'].errors['required']">name is required</div>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-secondary">submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--end product details model-->
+
+
+    <div class="container mt-3 mb-4">
+        <button type="button" class="btn btn-secondary" data-toggle="tooltip" title=""  aria-label="Close"  data-bs-target="#staticBackdrop"  data-bs-toggle="modal" (click)="resetForm()">Add Category</button>
+         <div class="col-lg-14 mt-4 mt-lg-0">
+             <div class="row">
+               <div class="col-md-12">
+                 <div class="user-dashboard-info-box table-responsive mb-0 bg-white p-4 shadow-sm">
+                   <table class="table manage-candidates-top mb-0">
+                     <thead>
+                       <tr>
+                         <th  class="text-center">category Id</th>
+                         <th  class="text-center">category Name</th>
+                         <th class="action text-right">Action</th>
+                       </tr>
+                     </thead>
+                     <tbody>
+                       <tr class="candidates-list"   *ngFor= "let category of Categorylist | filter: filterTerm | paginate
+                       : {
+                           itemsPerPage: tableSize,
+                           currentPage: page,
+                           totalItems: count
+                         };
+                         let i = index" >
+                         <!-- <td class="title"> -->
+                            
+                           <td class="candidate-list-favourite-time text-center">
+                             <span class="candidate-list-time order-1">{{category.id}}</span>
+                           </td>
+                           <td class="candidate-list-favourite-time text-center">
+                             <span class="candidate-list-time order-1">{{category.name}}</span>
+                           </td>
+                           <td>
+                             <ul class="list-unstyled mb-0 d-flex justify-content-front">
+                               <li><a  (click)="onEditCategory(category.id)" class="text-info" data-toggle="tooltip" title="" data-original-title="Edit"  aria-label="Close"  data-bs-target="#staticBackdrop"  data-bs-toggle="modal"><i class="fa fa-pencil" ></i></a></li>
+                               <li><a  (click)="onDeleteCategory(category.id)" class="text-danger" data-toggle="tooltip" title="" data-original-title="Delete"><i class="fa fa-trash"></i></a></li>
+                             </ul>
+                           </td>
+                       </tr>
+                     </tbody>
+                   </table>
+                 </div>
+               </div>
+             </div>
+           </div>
+           <div class="d-flex justify-content-center">
+             <pagination-controls
+               previousLabel="Prev"
+               nextLabel="Next"
+               (pageChange)="onTableDataChange($event)"
+             >
+             </pagination-controls>
+             </div>
+         </div>
+ </code>

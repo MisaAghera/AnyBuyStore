@@ -1,0 +1,224 @@
+<code>
+   <div class="container" >
+    <div class="row" >
+      <div class="col-sm-1">
+        <div class="dropdown">
+          <button class="dropdown-toggle button-style" type="button" id="dropdownMenu1" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-sort icon-style"></i>
+          </button>
+          <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+            <li class="dropdown-submenu">
+              <a class="dropdown-item" tabindex="-1">price</a>
+              <ul class="dropdown-menu">
+                <li class="dropdown-item"><a tabindex="-1" (click)="OnClickPriceHighToLow()">high to low</a></li>
+                <li class="dropdown-item"><a tabindex="-1" (click)="OnClickPriceLowToHigh()">low to high</a></li>
+              </ul>
+            </li>
+            <li class="dropdown-submenu">
+              <a class="dropdown-item" tabindex="-1">name</a>
+              <ul class="dropdown-menu">
+                <li class="dropdown-item"><a tabindex="-1" (click)="OnClickAscendingName()">ascending</a></li>
+                <li class="dropdown-item"><a tabindex="-1" (click)="OnClicDescendingName()">descending</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-sm-1">
+        <div class="dropdown">
+          <button class="dropdown-toggle button-style" type="button" id="dropdownMenu1" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-filter icon-style"></i>
+          </button>
+          <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+            <li class="dropdown-submenu">
+              <a class="dropdown-item" tabindex="-1">category</a>
+              <ul class="dropdown-menu">
+                <div *ngFor="let category of Categorylist">
+                  <li class="dropdown-submenu">
+                    <a class="dropdown-item" (mouseenter)="onSelectSubcategory(category.id)">{{category.name}} </a>
+                    <ul class="dropdown-menu">
+                      <div *ngFor="let subcategory of SubcategoryList ">
+                        <li class="dropdown-item"><a
+                            (click)="getProductsBysubcategory(subcategory.id)">{{subcategory.name}}</a></li>
+                      </div>
+                    </ul>
+                  </li>
+                </div>
+              </ul>
+            </li>
+            <li class="dropdown-submenu">
+              <a class="dropdown-item" tabindex="-1">discount</a>
+              <ul class="dropdown-menu">
+                <div *ngFor="let discount of DiscountList">
+                    <li class="dropdown-item"><a
+                      (click)="getProductsByDiscount(discount.id)">{{discount.value}}</a>
+                    </li>
+                </div>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-sm-1">
+        <button class="button-style " (click)="getProducts()"><i class="fa fa-close icon-style"></i></button>
+      </div>
+  </div>
+  <div class="container mt-5">
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="filterTerm" />
+    </div>
+  </div>
+ 
+    <!--product details model-->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">Product Details</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="col-lg-8">
+                    <div class="card mb-4 card-style" >
+                      <div class="card-body">
+                          <!-- <div>
+                            <img class="img-fluid" [src]="createImgPath(ProductDetails!.imageUrl!)" alt="product picture" alt="">
+                          </div>
+                         -->
+                        <div class="row">
+                            <div class="col-sm-6">
+                              <p class="mb-0">Product Id</p>
+                            </div>
+                            <div class="col-sm-6">
+                              <p class="text-muted mb-0">{{ProductDetails?.id}}</p>
+                            </div>
+                          </div>
+                        <hr>
+                        <div class="row">
+                          <div class="col-sm-6">
+                            <p class="mb-0">product Name</p>
+                          </div>
+                          <div class="col-sm-6">
+                            <p class="text-muted mb-0">{{ProductDetails?.name}}</p>
+                          </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                          <div class="col-sm-6">
+                            <p class="mb-0">brand</p>
+                          </div>
+                          <div class="col-sm-6">
+                            <p class="text-muted mb-0">{{ProductDetails?.brand}}</p>
+                          </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                          <div class="col-sm-6">
+                            <p class="mb-0">price</p>
+                          </div>
+                          <div class="col-sm-6">
+                            <p class="text-muted mb-0">{{ProductDetails?.price | currency:'INR'}}</p>
+                          </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                          <div class="col-sm-6">
+                            <p class="mb-0">quantity</p>
+                          </div>
+                          <div class="col-sm-6">
+                            <p class="text-muted mb-0">{{ProductDetails?.quantity}}</p>
+                          </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-6">
+                              <p class="mb-0">description</p>
+                            </div>
+                            <div class="col-sm-6">
+                              <p class="text-muted mb-0">{{ProductDetails?.description}}</p>
+                            </div>
+                          </div>
+                        <hr>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    <!--end product details model-->
+
+    <div class="container mt-3 mb-4">
+        <div class="col-lg-14 mt-4 mt-lg-0">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="user-dashboard-info-box table-responsive mb-0 bg-white p-4 shadow-sm">
+                  <table class="table manage-candidates-top mb-0">
+                    <thead>
+                      <tr>
+                        <th class="text-center">photo</th>
+                        <th  class="text-center">product Id</th>
+                        <th  class="text-center">product Name</th>
+                        <th class="text-center">brand</th>
+                        <th class="text-center">price</th>
+                        <th class="text-center">quantity</th>
+                        <th class="action text-right">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="candidates-list"   *ngFor= "let product of ProductList | filter: filterTerm | paginate
+                      : {
+                          itemsPerPage: tableSize,
+                          currentPage: page,
+                          totalItems: count
+                        };
+                  let i = index" >
+                        <!-- <td class="title"> -->
+                           <div class="thumb text-center"  >
+                            <img class="img-fluid" [src]="createImgPath(product.imageUrl)" alt="product picture">
+                          </div> 
+                          <td class="candidate-list-favourite-time text-center">
+                            <span class="candidate-list-time order-1">{{product.id}}</span>
+                          </td>
+                          <td class="candidate-list-favourite-time text-center">
+                            <span class="candidate-list-time order-1">{{product.name}}</span>
+                          </td>
+                          <td class="candidate-list-favourite-time text-center">
+                            <span class="candidate-list-time order-1">{{product.brand}}</span>
+                          </td>
+                          <td class="candidate-list-favourite-time text-center">
+                            <span class="candidate-list-time order-1">{{product.price | currency:'INR'}}</span>
+                          </td>
+                        <td class="candidate-list-favourite-time text-center">
+                          <span class="candidate-list-time order-1">{{product.quantity}}</span>
+                        </td>
+                       
+                        <td>
+                          <ul class="list-unstyled mb-0 d-flex justify-content-front">
+                            <li><a  (click)="getProductDetails(product.id)" class="text-primary viewButton"  data-toggle="tooltip" title="" data-original-title="view" aria-label="Close" data-bs-target="#staticBackdrop"  data-bs-toggle="modal"><i class="fa fa-eye" ></i></a></li>
+                            <li><a  (click)="onDeleteProduct(product.id)" class="text-danger" data-toggle="tooltip" title="" data-original-title="Delete"><i class="fa fa-trash"></i></a></li>
+                          </ul>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center">
+            <pagination-controls
+              previousLabel="Prev"
+              nextLabel="Next"
+              (pageChange)="onTableDataChange($event)"
+            >
+            </pagination-controls>
+            </div>
+        </div>
+  </div>
+</code>

@@ -1,0 +1,12 @@
+.lineStyle{
+    border: 0.5px solid rgb(186, 185, 185);
+}
+.product-thumbnail{
+    margin-top: 20px;
+}
+.product-name{
+    margin-top: 20px;
+}
+.product-quantity{
+   margin-top:-30px;
+}

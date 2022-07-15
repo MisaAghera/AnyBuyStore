@@ -1,0 +1,136 @@
+
+
+.user-dashboard-info-box .candidates-list td {
+    vertical-align: middle;
+}
+
+.user-dashboard-info-box td li {
+    margin: 0 7px;
+}
+
+.user-dashboard-info-box .table thead th {
+    border-bottom: none;
+}
+
+.table.manage-candidates-top th {
+    border: 0;
+}
+
+.user-dashboard-info-box .candidate-list-favourite-time .candidate-list-favourite {
+    margin-bottom: 10px;
+}
+
+.table.manage-candidates-top {
+    min-width: 650px;
+    width: 100%;
+}
+
+.user-dashboard-info-box .candidate-list-details ul {
+    color: #969696;
+}
+
+
+
+.candidate-banner .candidate-list:hover {
+    position: inherit;
+    -webkit-box-shadow: inherit;
+    box-shadow: inherit;
+    z-index: inherit;
+}
+
+.bg-white {
+    background-color: #ffffff !important;
+}
+.p-4 {
+    padding: 1.5rem!important;
+}
+.mb-0, .my-0 {
+    margin-bottom: 0!important;
+}
+.shadow-sm {
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+}
+
+.user-dashboard-info-box .candidates-list .thumb {
+    margin-right: 20px;
+}
+
+.viewButton{
+    background-color:white;border:white;
+}
+
+/* .user-dashboard-info-box{
+    width:70%;
+} */
+.candidate-list-favourite-time{
+    padding: 20px;
+}
+.table-responsive{
+ padding:0px ;
+}
+.container{
+    margin-left: 0px;
+    margin-right: 0px;
+
+}
+  
+  
+  
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu>.dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -6px;
+    margin-left: -1px;
+    -webkit-border-radius: 0 6px 6px 6px;
+    -moz-border-radius: 0 6px 6px;
+    border-radius: 0 6px 6px 6px;
+}
+
+.dropdown-submenu:hover>.dropdown-menu {
+    display: block;
+}
+
+.dropdown-submenu>a:after {
+    display: block;
+    content: " ";
+    float: right;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 5px 0 5px 5px;
+    border-left-color: #ccc;
+    margin-top: 5px;
+    margin-right: -10px;
+}
+
+.dropdown-submenu:hover>a:after {
+    border-left-color: #fff;
+}
+
+.dropdown-submenu.pull-left {
+    float: none;
+}
+
+.dropdown-submenu.pull-left>.dropdown-menu {
+    left: -100%;
+    margin-left: 10px;
+    -webkit-border-radius: 6px 0 6px 6px;
+    -moz-border-radius: 6px 0 6px 6px;
+    border-radius: 6px 0 6px 6px;
+}
+ 
+.button-style{
+    border: none;
+    background-color: white;
+    font-size:26px ;
+    color: white;
+}
+.icon-style{
+    color: black;
+}
+

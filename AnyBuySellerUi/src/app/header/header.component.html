@@ -1,0 +1,54 @@
+<div class="sidebar-nav">
+  <nav class="navbar navbar-dark bg-primary fixed-top">
+    <div class="container">
+      <!-- Mobile Menu Toggle Button -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+        aria-controls="offcanvasNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- Menus List -->
+      <div class="offcanvas offcanvas-start shadow" tabindex="-1" id="offcanvasNavbar"
+        aria-labelledby="offcanvasNavbarLabel">
+        <div class="offcanvas-body">
+          <ul class="navbar-nav">
+            <li><a routerLink="product/addEdit/0"><i class="bi bi-pencil-square"></i> <span class="item-text">add
+                  product</span></a></li>
+            <li><a routerLink="/products"><i class="bi bi-person-check"></i> <span class="item-text">Products</span></a>
+            </li>
+            <li><a routerLink="/orders"><i class="bi bi-card-list"></i> <span class="item-text">orders</span></a>
+            </li>
+            <li><a routerLink="/profile"><i class="bi bi-person-check"></i><span class="item-text">profile</span></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div *ngIf='isUserAuthenticated ==false'>
+        <div class="row">
+          <div class="col-md-6">
+            <a routerLink="/login" class="authTextDesign">login</a>
+          </div>
+          <div class="col-md-6">
+            <a routerLink="/signup" class="authTextDesign">signup</a>
+          </div>
+        </div>
+      </div>
+      <div *ngIf='isUserAuthenticated==true '>
+        <div class="btn-group">
+          <a href="#" class="dropdown-toggle text-white text-decoration-none" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <span class="usericon"><i class="bi bi-person-circle"></i></span>
+            <span class="textnone">{{userName}}</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <!-- <li><button class="dropdown-item" type="button"><i class="bi bi-lock-fill"></i> Change Password</button>
+            </li> -->
+            <li><button class="dropdown-item" type="button" (click)="logout()"><i class="bi bi-box-arrow-right"></i>
+                Sign out</button></li>
+            <li><button class="dropdown-item" type="button" routerLink="/passwordChange">
+                Change Password</button></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+</div>

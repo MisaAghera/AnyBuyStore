@@ -1,0 +1,144 @@
+<ngx-slick-carousel class="main-slider slider" [config]="slideConfig">
+  <div ngxSlickItem class="slider-item " style="background-image:url('assets/images/slideshow1-2.jpg')">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 col-12 offset-lg-6 offset-md-6">
+          <div class="slider-caption">
+            <span class="lead">Winter Collection Sale </span>
+            <h1 class="mt-2 mb-5"><span class="text-color">300 off </span>to everything</h1>
+            <a routerLink="/products" class="btn btn-main">Shop Now</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div ngxSlickItem class="slider-item" style="background-image:url('assets/images/slideshow1-3.jpg')">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 col-12 offset-lg-6 offset-md-6">
+          <div class="slider-caption">
+            <span class="lead">up to 300 off</span>
+            <h1 class="mt-2 mb-5"><span class="text-color">Classic</span> Style</h1>
+            <a routerLink="/products" class="btn btn-main">Shop Now</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div ngxSlickItem class="slider-item"
+    style="background-image:url('assets/images/slideshow1-1.jpg'); background-position:50%;background-repeat:no-repeat;">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 col-12 offset-lg-6 offset-md-6">
+          <div class="slider-caption">
+            <span class="lead">Trendy dress</span>
+            <h1 class="mt-2 mb-5"><span class="text-color">Winter </span>Collection</h1>
+            <a routerLink="/products" class="btn btn-main">Shop Now</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ngx-slick-carousel>
+<section>
+  <app-products></app-products>
+</section>
+
+<!-- <section>
+  <div class="container-fluid py-2">
+    <h5 class="heading"><b>Categories</b></h5>
+    <div class="d-flex flex-row flex-nowrap heightStyle">
+      <div *ngFor="let category of Categorylist ">
+        <div class="card card-body categoryCard">
+          <app-categories (IdEvent)="getSubategories($event)" [category]="category"></app-categories>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="container-fluid py-2">
+    <h5 class="heading"><b>Subcategories</b></h5>
+    <div class="d-flex flex-row flex-nowrap heightStyle">
+      <div *ngFor="let subcategory of SubcategoryList ">
+        <div class="card card-body SubcategoryCard">
+          <app-subcategories (SubcategoryIdEvent)="getSubcategoryId($event)" [subcategory]="subcategory">
+          </app-subcategories>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+<!-- <section>
+  <app-products *ngIf="SubcategoryId" [SubcategoryId]="SubcategoryId"></app-products>
+</section> -->
+
+<section class="section products-main">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="title text-center">
+          <h2></h2>
+          <p>The best Online sales to shop these weekend</p>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- <div class="row">
+
+      <div class="col-lg-3 col-12 col-md-6 col-sm-6 mb-5 ">
+        <div class="product">
+          <div class="product-wrap">
+            <a href="#"><img class="img-fluid w-100 mb-3 img-first" src="assets/images/222.jpg" alt="product-img" /></a>
+          </div>
+
+          <div class="product-hover-overlay">
+            <a href="#"><i class="tf-ion-android-cart"></i></a>
+            <a href="#"><i class="tf-ion-ios-heart"></i></a>
+          </div>
+
+          <div class="product-info">
+            <h2 class="product-title h5 mb-0"><a href="#">Sleeve linen shirt</a></h2>
+            <span class="price">
+              <del>60
+                <pre wp-pre-tag-5=""></pre>
+              </del>
+              $50.10
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+<section class="section products-list">
+  <div class="container">
+    <div class="row">
+      <section class="features border-top">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-6 col-sm-6 col-md-6">
+              <div class="feature-block">
+                <i class="tf-wallet"></i>
+                <div class="content">
+                  <h5>30 Days Return</h5>
+                  <p>Money back Guarantee</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-md-6">
+              <div class="feature-block">
+                <i class="tf-clock"></i>
+                <div class="content">
+                  <h5>24/7 Support</h5>
+                  <p>All time customer support </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>

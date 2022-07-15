@@ -1,0 +1,12 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+button{
+    cursor: pointer;
+}
+.dropdown-menu{
+    cursor: pointer;
+}
+.card-style{
+    border: none;
+    width: 400px;
+}

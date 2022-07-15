@@ -1,0 +1,12 @@
+
+a:hover {
+    cursor:grab;
+  }
+.cardDesign:hover{
+    background-color:#F2F2F2;
+    border-color: white;
+}
+.cardDesign{
+    border-color:#F2F2F2;
+
+}

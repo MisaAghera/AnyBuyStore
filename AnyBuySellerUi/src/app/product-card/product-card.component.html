@@ -1,0 +1,25 @@
+<a routerLink="/product/{{Product?.id}}">
+    <div class="col hp">
+        <div class="card h-100 shadow-sm">
+            <img class="img-fluid" [src]="createImgPath(Product!.imageUrl!)" class="card-img-top" alt="product picture"> 
+            <div class="label-top shadow-sm">
+                <a id="product-company">{{Product?.brand}}</a>
+            </div>
+            <div class="card-body">
+                <div class="clearfix mb-3">
+                    <span class="float-start badge rounded-pill bg-success">{{Product?.price | currency:'INR'}}</span>
+                    <span class="float-end small text-muted text-uppercase">{{DiscountDetails.value | currency:'INR'}} OFF</span>
+                </div>
+                <h3 class="card-title">
+                    {{Product?.name}}
+                </h3>
+                <p class="card-title">
+                    {{Product?.description}}
+                </p>
+            </div>
+        </div>
+    </div>
+</a>
+
+
+

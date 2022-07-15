@@ -1,0 +1,53 @@
+<section class="page-header">
+    <div class="overly"></div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="content text-center">
+                    <h1 class="mb-3">Cart</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cart shopping page-wrapper" id = "cartcontainer">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="product-list">
+                    <form class="cart-form">
+                        <div class="table shop_table shop_table_responsive cart " cellspacing="0">
+                                <div class = "row"> 
+                                    <div class="product-thumbnail col-sm-2"> </div>
+                                    <div class="product-name col-sm-2">Product</div>
+                                    <div class="product-price col-sm-2">Price</div>
+                                    <div class="product-quantity col-sm-2">Quantity</div>
+                                    <div class="product-subtotal col-sm-2">Total</div>
+                                    <div class="product-remove col-sm-1"> </div>
+                                    <hr>
+                                </div>
+                                    <div class="cart_item"  *ngFor= "let product of cartList">
+                                      <app-cart-card  [product] = "product"   (productChange)="addItem($event)"></app-cart-card>
+                                      </div>   
+                        </div>
+                        <div class="cart-summary">
+                            <div class="text-center cart-buttons mt-3">
+                              <a (click)="onClickDisplayAddressPanel()" id="checkout" class="btn btn-small btn-main btn-block">checkout</a>
+                              <!-- <a (click)="makePayment(15)"  id="checkout" class="btn btn-small btn-main btn-block">checkout</a> -->
+                            </div>
+                            
+                        </div> 
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div id="editAddressPanel">
+    <app-edit-address (sendAddressIdEvent)="getAddressIdFromChild($event)" ></app-edit-address>
+    <div class="text-center cart-buttons mt-3">
+        <a (click)="onClickOrderPlace()" class="btn btn-small btn-main btn-block">place order</a>
+      </div>
+</div>
