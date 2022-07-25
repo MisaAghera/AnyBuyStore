@@ -125,9 +125,8 @@ namespace AnyBuyStore.Core.Handlers.LoginHandler.Commands.ExternalLogin
                 var payload = await GoogleJsonWebSignature.ValidateAsync(externalAuth.IdToken, settings);
                 return payload;
             }
-            catch (Exception ex)
+            catch (Exception )
             {
-                //log an exception
                 return null;
             }
         }

@@ -1,7 +1,6 @@
 export class AddressModel {
     id :number=0;
 
-
     userId:number=0;
 
     house:string='';

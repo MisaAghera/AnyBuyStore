@@ -12,7 +12,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   submitted = false;
-  returnUrl: string | undefined;
 
   loginForm: FormGroup = new FormGroup({
     username: new FormControl(""),
@@ -34,7 +33,6 @@ export class LoginComponent implements OnInit {
         password: ['', [Validators.required]],
       }
     );
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
 
@@ -68,7 +66,8 @@ export class LoginComponent implements OnInit {
           localStorage.setItem("userId", res.userId!.toString());
           localStorage.setItem("userName",res.userName!.toString());
           this.authService.sendAuthStateChangeNotification(res.isAuthSuccessful);
-          this.router.navigate([this.returnUrl]);
+          this.router.navigate(["/orders"]);
+          
         },
         error: (err: HttpErrorResponse) => {
           document.getElementById("danger-alert")!.style.display = "block";

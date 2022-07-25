@@ -8,6 +8,8 @@
     <div class="mb-3">
         <label for="category" class="form-label">product category</label>
         <select class="form-select" [(ngModel)]="selectedCategory.id" (change)="onSelectSubcategory(selectedCategory.id)"
+
+        
             aria-label="Default select example" id="category">
             <option selected>select</option>
             <option *ngFor="let category of Categorylist" value={{category.id}}>{{category.name}}</option>

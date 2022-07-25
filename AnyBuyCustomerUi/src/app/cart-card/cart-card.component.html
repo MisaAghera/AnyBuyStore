@@ -1,0 +1,40 @@
+<div class="row">
+    <div class="product-thumbnail col-sm-2" data-title="Thumbnail">
+        <a routerLink="/product/{{product.productId}}">
+            <img class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail"
+                [src]="createImgPath(product!.productImgUrl!)" class="card-img-top" alt="product picture">
+        </a>
+    </div>
+    <div class="product-name col-sm-2" data-title="Product">
+        <a routerLink="/product/{{product.productId}}">{{product.productName}}</a>
+    </div>
+    <div class="product-price col-sm-2" data-title="Price">
+        <span class="amount">
+            <pre wp-pre-tag-3=""></pre>
+            <p>{{product.productPrice | currency:"INR"}}</p>
+        </span><br>
+    </div>
+    <div class="product-quantity col-sm-2" data-title="Quantity"><br>
+        <div class="quantity"><br>
+            <label class="sr-only">Quantity</label>
+            <p> <input type="number" id="qty" class="input-text qty text" step="1" min="1"
+                    max="{{product.actualProductQuantity}}" value="1" title="Qty" size="4"
+                    value="{{validProductQuantity}}" [(ngModel)]="product.quantity"
+                    (input)='sendCartItemToParent(product)' onKeyDown="return false"><br>
+        </div><br>
+    </div>
+    <div class="product-price col-sm-2" data-title="Price">
+        <span class="amount">
+            <pre wp-pre-tag-3=""></pre>
+            <input hidden type="number" value="1" title="Qty" size="4"
+                [(ngModel)]="product.quantity! * product.productPrice!">
+            <p>{{product.quantity! * product.productPrice! | currency:"INR"}}</p>
+        </span><br>
+    </div>
+    <div class="product-remove col-sm-1" data-title="Remove"><br>
+        <button style="border:none;background-color: white;" (click)="deleteCartItem(product.id)"
+            aria-label="Remove this item" data-product_id="30" data-product_sku="">×</button><br>
+    </div>
+    <br>
+    <hr class="lineStyle">
+</div>

@@ -1,0 +1,261 @@
+<code>
+ <div class="container" >
+    <div class="row" >
+      <div class="col-sm-1">
+        <div class="dropdown">
+          <button class="dropdown-toggle button-style" type="button" id="dropdownMenu1" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-sort icon-style"></i>
+          </button>
+          <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+            <li class="dropdown-submenu">
+              <a class="dropdown-item" tabindex="-1">total amount</a>
+              <ul class="dropdown-menu">
+                <li class="dropdown-item"><a tabindex="-1" (click)="OnClickPriceHighToLow()">high to low</a></li>
+                <li class="dropdown-item"><a tabindex="-1" (click)="OnClickPriceLowToHigh()">low to high</a></li>
+              </ul>
+            </li>
+            <li class="dropdown-submenu">
+              <a class="dropdown-item" tabindex="-1"> user name</a>
+              <ul class="dropdown-menu">
+                <li class="dropdown-item"><a tabindex="-1" (click)="OnClickAscendingName()">ascending</a></li>
+                <li class="dropdown-item"><a tabindex="-1" (click)="OnClicDescendingName()">descending</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-sm-1">
+        <button class="button-style " (click)="getOrders()"><i class="fa fa-close icon-style"></i></button>
+      </div>
+  </div>
+  </div>
+  <div class="container mt-5">
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="filterTerm" />
+    </div>
+  </div>
+   
+    <!--order details model-->
+    <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalToggleLabel">Order Details</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container mt-3 mb-4">
+                    <div class="col-lg-14 mt-4 mt-lg-0">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="user-dashboard-info-box table-responsive mb-0 bg-white p-4 shadow-sm">
+                              <table class="table manage-candidates-top mb-0">
+                                <thead>
+                                  <tr>
+                                    <th  class="text-center">Id</th>
+                                    <th  class="text-center">productId</th>
+                                    <th  class="text-center">discountId</th>
+                                    <th  class="text-center">quantity</th>
+                                    <th  class="text-center">status</th>
+                                    <th class="action text-right">Action</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr class="candidates-list"   *ngFor= "let orderDetail of OrderDetailsList " >
+                                    <!-- <td class="title"> -->
+                                      <td class="candidate-list-favourite-time text-center">
+                                        <span class="candidate-list-time order-1">{{orderDetail.id}}</span>
+                                      </td>
+                                      <td class="candidate-list-favourite-time text-center">
+                                        <span class="candidate-list-time order-1">{{orderDetail.productId}}</span>
+                                      </td>
+                                      <td class="candidate-list-favourite-time text-center">
+                                       <span class="candidate-list-time order-1">{{orderDetail.discountId}}</span>
+                                     </td>
+                                     <td class="candidate-list-favourite-time text-center">
+                                       <span class="candidate-list-time order-1">{{orderDetail.quantity}}</span>
+                                     </td>
+                                     <td class="candidate-list-favourite-time text-center">
+                                        <span class="candidate-list-time order-1">{{orderDetail.status}}</span>
+                                      </td>
+                                      <td>
+                                        <ul class="list-unstyled mb-0 d-flex justify-content-front">
+                                          <li><a  (click)="getOrderDetailById(orderDetail.id)" class="text-info" title="" data-original-title="Edit"  data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal" ><i class="fa fa-pencil"></i></a></li>
+                                          <li><a  (click)="onDeleteOrder(orderDetail.id)" class="text-danger"  title="" data-original-title="Delete"><i class="fa fa-trash"></i></a></li> 
+                                       </ul>
+                                      </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+               </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--order details detail model-->
+      <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalToggleLabel2">Order Details</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                
+                    <div class="card mb-4 card-style" >
+                      <div class="card-body">
+                        <form [formGroup]="newOrderDetailsForm" autocomplete="off" novalidate
+                            (ngSubmit)="onEditSubmit(newOrderDetailsForm.value) ">
+                            
+                            
+                                <div class="card ">
+                                    <div class="card-body">
+                                        <div class="row" style = "display:none">
+                                            <div class="col-sm-6">
+                                                <label for="id" class="mb-0">id</label>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input type="text" id="id" class="form-control" formControlName="id"
+                                                    readonly="readonly" value="0" />
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <label for="productId" class="mb-0">productId</label>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input type="text" id="productId" class="form-control"
+                                                    formControlName="productId"  value="0" />
+                                            </div>
+                                        </div>
+                                        <hr>
+        
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <label for="orderId" class="mb-0">orderId</label>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input type="text" id="orderId" class="form-control" formControlName="orderId"
+                                                     value="0" />
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <label for="discountId" class="mb-0">discountId</label>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input type="text" id="discountId" class="form-control"
+                                                    formControlName="discountId" value="0" />
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <label for="quantity" class="mb-0">quantity</label>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input type="text" id="quantity" class="form-control" formControlName="quantity"
+                                                 value="0" />
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <label for="status" class="mb-0">status</label>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <select name="status" id="status" formControlName="status" class="form-select">
+                                                    <option value="preparing">preparing</option>
+                                                    <option value="shipped">shipped</option>
+                                                    <option value="delivered">delivered</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                   
+                                </div>
+                            </div>
+                        
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-secondary">submit</button>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+             
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" data-bs-dismiss="modal">Back to OrderDetails</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    <!--end order details model-->
+
+    <div class="container mt-3 mb-4">
+         <div class="col-lg-14 mt-4 mt-lg-0">
+             <div class="row">
+               <div class="col-md-12">
+                 <div class="user-dashboard-info-box table-responsive mb-0 bg-white p-4 shadow-sm">
+                   <table class="table manage-candidates-top mb-0">
+                     <thead>
+                       <tr>
+                         <th  class="text-center">user name</th>
+                         <th  class="text-center">user id</th>
+                         <th  class="text-center">totalAmount </th>
+                         <th class="action text-right">Action</th>
+                       </tr>
+                     </thead>
+                     <tbody>
+                       <tr class="candidates-list"   *ngFor= "let order of OrderList | filter: filterTerm | paginate
+                       : {
+                           itemsPerPage: tableSize,
+                           currentPage: page,
+                           totalItems: count
+                         };
+                         let i = index" >
+    
+                        
+                           <td class="candidate-list-favourite-time text-center">
+                            <span class="candidate-list-time order-1">{{order.userName}}</span>
+                          </td>
+                          <td class="candidate-list-favourite-time text-center">
+                            <span class="candidate-list-time order-1">{{order.userId}}</span>
+                          </td>
+                          <td class="candidate-list-favourite-time text-center">
+                            <span class="candidate-list-time order-1">{{order.totalAmount| currency:"INR"}}</span>
+                          </td>
+                           <td>
+                             <ul class="list-unstyled mb-0 d-flex justify-content-front">
+                               <li><a  (click)="getOrdersDetails(order.id)" class="text-info" title="" data-original-title="View"  data-bs-toggle="modal" href="#exampleModalToggle" role="button"  ><i class="fa fa-eye" ></i></a></li>
+                               <li><a  (click)="onDeleteOrder(order.id)" class="text-danger"  title="" data-original-title="Delete"><i class="fa fa-trash"></i></a></li> 
+              
+                              </ul>
+                           </td>
+                       </tr>
+                     </tbody>
+                   </table>
+                 </div>
+               </div>
+             </div>
+           </div>
+           <div class="d-flex justify-content-center">
+             <pagination-controls
+               previousLabel="Prev"
+               nextLabel="Next"
+               (pageChange)="onTableDataChange($event)"
+             >
+             </pagination-controls>
+             </div>
+    </div>
+ </code>

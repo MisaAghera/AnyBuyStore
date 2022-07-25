@@ -85,6 +85,7 @@ export class AuthenticationService {
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
     localStorage.removeItem("userName");
+    localStorage.removeItem("refreshtoken");
     this.sendAuthStateChangeNotification(false);
   }
   sendAuthStateChangeNotification(isAuthenticated: boolean) {

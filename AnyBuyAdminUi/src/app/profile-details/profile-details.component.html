@@ -1,0 +1,90 @@
+<div class="container rounded bg-white mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-7 ">
+            <form [formGroup]="userForm" autocomplete="off" novalidate (ngSubmit)="updateUser(userForm.value) ">
+
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-right">Profile Settings</h4>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <input type="text" formControlName="id" hidden>
+                            <label class="labels">user name</label>
+                            <input type="text" id="userName" class="form-control" placeholder="enter user name"
+                                formControlName="userName" aria-label="userName"
+                                [ngClass]="{ 'is-invalid': submitted && f['userName'].errors }" />
+                            <div *ngIf="submitted && f['userName'].errors" class="invalid-feedback">
+                                <div *ngIf="f['userName'].errors['required']">username is required</div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Phone number</label>
+                            <input type="text" id="phoneNumber" class="form-control" placeholder="enter phone number"
+                                formControlName="phoneNumber" aria-label="phoneNumber"
+                                [ngClass]="{ 'is-invalid': submitted && f['phoneNumber'].errors }" />
+                            <div *ngIf="submitted && f['phoneNumber'].errors" class="invalid-feedback">
+                                <div *ngIf="f['phoneNumber'].errors['required']">phone number is required</div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Email ID</label>
+                            <input type="text" id="email" class="form-control" placeholder="enter email"
+                                formControlName="email" aria-label="email"
+                                [ngClass]="{ 'is-invalid': submitted && f['email'].errors }" />
+                            <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+                                <div *ngIf="f['email'].errors['required']">email is required</div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Age</label>
+                            <input type="text" id="age" class="form-control" placeholder="enter age"
+                                formControlName="age" aria-label="age" />
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Gender</label>
+                            <select name="gender" id="gender" formControlName="gender" class="form-select">
+                                <option value="male">male</option>
+                                <option value="female">female</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mt-5 text-center">
+                        <button class="btn btn-primary profile-button" type="submit">Save Profile</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-5" style="margin-top: 5%;">
+
+            <h5 class="modal-title" id="staticBackdropLabel">User Roles</h5>
+            <div class="modal-body">
+                <div class="col-lg-8">
+                    <div class="card mb-4 card-style">
+                        <div class="card-body">
+                            <div class="row" *ngFor="let role of UserRoles">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">{{role?.name}}</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0 btn btn" (click)="deleteRole(role!.id)"
+                                        style="right: 0px ; display: center;"><i class="fa fa-trash"></i></p>
+                                </div>
+                            </div>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  Add Role
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                  <a class="dropdown-item" (click)="addRole('Seller')" >Seller</a>
+                                  <a class="dropdown-item" (click)="addRole('Admin')" >Admin</a>
+                                  <a class="dropdown-item" (click)="addRole('Customer')" >Customer</a>
+                                </div>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

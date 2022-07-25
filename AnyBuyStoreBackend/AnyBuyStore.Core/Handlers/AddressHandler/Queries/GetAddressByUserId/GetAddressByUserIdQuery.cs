@@ -18,7 +18,7 @@ namespace AnyBuyStore.Core.Handlers.AddressHandler.Queries.GetAddressByUserId
             }
             public async Task<IEnumerable<AddressModel>> Handle(GetAddressByUserIdQuery request, CancellationToken cancellationToken)
             {
-                var data =  _context.Address.Where(a => a.UserId == request.UserId).ToList().GroupBy(x => x.AddressType, (key, group) => group.First());
+                var data =  _context.Address.Where(a => a.UserId == request.UserId).Include(a => a.Countries).Include(a => a.States).Include(a => a.Cities).ToList().GroupBy(x => x.AddressType, (key, group) => group.First());
 
                 var getData = new List<AddressModel>();
 
@@ -31,12 +31,14 @@ namespace AnyBuyStore.Core.Handlers.AddressHandler.Queries.GetAddressByUserId
                             UserId = vals.UserId,
                             House = vals.House,
                             Street = vals.Street,
-                            City = vals.City,
-                            State = vals.State,
-                            Country = vals.Country,
+                            StateId = vals.StateId,
+                            CityId = vals.CityId,
+                            CountryId = vals.CountryId,
                             ZipCode = vals.ZipCode,
                             AddressType = vals.AddressType,
-
+                            Country = vals.Countries.Name,
+                            City = vals.Cities.Name,
+                            State = vals.States.Name,
                         });
                     }
                 }
@@ -54,12 +56,12 @@ namespace AnyBuyStore.Core.Handlers.AddressHandler.Queries.GetAddressByUserId
 
         public string Street { get; set; } = string.Empty;
 
-        public string City { get; set; } = string.Empty;
-
-        public string State { get; set; } = string.Empty;
-
-        public string Country { get; set; } = string.Empty;
-
+        public int? CountryId { get; set; }
+        public int? CityId { get; set; }
+        public int? StateId { get; set; }
+        public string? Country { get; set; }
+        public string? State { get; set; }
+        public string? City { get; set; }
         public string ZipCode { get; set; } = string.Empty;
 
         public string AddressType { get; set; } = string.Empty;

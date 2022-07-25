@@ -1,12 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { GlobalConstants } from '../shared/global-constants.model';
 import { OrderDetailsModel } from '../shared/models/order-details-model';
 import { OrderDetailsService } from '../shared/services/order-details.service';
 import { OrderModel } from '../shared/models/order-model';
-import { OrderService } from '../shared/services/order.service';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { DiscountsService } from '../shared/services/discounts.service';
 import { AddressService } from '../shared/services/address.service';
 import { AddressModel } from '../shared/models/address-model';
 @Component({
@@ -44,9 +41,8 @@ export class OrdersComponent implements OnInit {
 
   getOrderAddress(orderDetailsId:number){
     this.OrderDetailsService.getById(orderDetailsId).subscribe(res=>{
-      this.AddressService.getByOrderId(res.orderId).subscribe(res=>{
+      this.AddressService.getByOrderId(res.orderId!).subscribe(res=>{
         this.AddressDetails = res;
-        console.log(this.AddressDetails);
       });
     });
   }
@@ -103,7 +99,6 @@ export class OrdersComponent implements OnInit {
     Details.In.quantity = formValue.quantity;
     Details.In.status = formValue.status;
 
-   
       await this.OrderDetailsService.update(Details).subscribe(res => {
         alert('edited successfully');
         location.reload();
@@ -111,12 +106,9 @@ export class OrdersComponent implements OnInit {
     
   }
 
-
   constructor(
     public route: ActivatedRoute,
     private formBuilder: FormBuilder,
-    private orderService:OrderService,
-    private DiscountsService:DiscountsService,
     private OrderDetailsService:OrderDetailsService,
     private AddressService:AddressService
     ) { }

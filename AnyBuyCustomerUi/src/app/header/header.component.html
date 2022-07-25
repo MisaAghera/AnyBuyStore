@@ -1,0 +1,78 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-white w-100 navigation" id="navbar">
+  <div class="container">
+    <a class="navbar-brand font-weight-bold" routerLink="/home">AnyBuyStore</a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navbar"
+      aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse " id="main-navbar">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item active">
+          <a class="nav-link" routerLink="/home">Home </a>
+        </li>
+
+        <!-- / Blog -->
+        <li class="nav-item dropdown dropdown-slide">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-delay="350"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Shop.
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown3">
+            <li><a routerLink="/products">Shop</a></li>
+            <li><a routerLink="/cart">Cart</a></li>
+          </ul>
+        </li><!-- / Blog -->
+
+        <!-- Account -->
+        <li class="nav-item dropdown dropdown-slide">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown5" role="button" data-delay="350"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Account.
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown5">
+            <li><a routerLink="/orders">Orders</a></li>
+            <li><a routerLink="/profile-details">Profile Details</a></li>
+            <div *ngIf='isUserAuthenticated ==false'>
+              <li><a routerLink="/login" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Login
+                  Page</a></li>
+              <li><a routerLink="/signup" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">SignUp
+                  Page</a></li>
+            </div>
+            <div *ngIf='isUserAuthenticated==true'>
+              <li><a (click)="logout()">Logout</a></li>
+              <li><a routerLink="/passwordChange">change password</a></li>
+            </div>
+            <!-- <li><a href="#">Forgot Password</a></li> -->
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <ul class="top-menu list-inline mb-0 d-none d-lg-block" id="top-menu">
+      <li class="list-inline-item">
+        <a href="#" class="search_toggle" id="search-icon"><i class="tf-ion-android-search"></i></a>
+      </li>
+      <li class="dropdown cart-nav dropdown-slide list-inline-item">
+        <a href="#" class="dropdown-toggle cart-icon" data-toggle="dropdown" data-hover="dropdown">
+          <i class="tf-ion-android-cart"></i>
+        </a>
+        <div class="dropdown-menu cart-dropdown">
+          <div class="cart-summary">
+            <div class="text-center cart-buttons mt-3">
+              <h5>{{CartCount}}</h5>
+              <a routerLink="/cart" class="btn btn-small btn-transparent btn-block">View Cart</a>
+            </div>
+          </div>
+        </div>
+      </li>
+      <div *ngIf='isUserAuthenticated ==false' class="list-inline-item ml-3">
+        <li class="cart-nav list-inline-item"><a routerLink="/login" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Login</a></li>
+        <li class="cart-nav list-inline-item ml-3"><a routerLink="/signup"  routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">SignUp</a></li>
+      </div>
+      <div *ngIf='isUserAuthenticated ==true' class="list-inline-item">
+        <li class="list-inline-item"><a routerLink="/profile-details"><i class="tf-ion-ios-person mr-3"></i></a></li>
+      </div>
+    </ul>
+  </div>
+</nav>

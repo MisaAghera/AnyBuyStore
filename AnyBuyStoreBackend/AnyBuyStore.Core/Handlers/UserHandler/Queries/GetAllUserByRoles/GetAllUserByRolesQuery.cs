@@ -1,11 +1,12 @@
 ﻿using AnyBuyStore.Data.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace AnyBuyStore.Core.Handlers.UserHandler.Queries.GetAllUserByRoles
 {
     public class GetAllUserByRolesQuery : IRequest<IEnumerable<UserModel>> {
-        public int RoleId { get; set; }
+        public List<int> RoleId { get; set; }
     }
 
     public class GetAllUsersHandler : IRequestHandler<GetAllUserByRolesQuery, IEnumerable<UserModel>>
@@ -17,10 +18,10 @@ namespace AnyBuyStore.Core.Handlers.UserHandler.Queries.GetAllUserByRoles
         }
         public async Task<IEnumerable<UserModel>> Handle(GetAllUserByRolesQuery request, CancellationToken cancellationToken)
         {
-
-            var data = await _context.Users.Join(_context.UserRoles, user => user.Id, userRoles => userRoles.UserId, (user, userRoles) => new { User = user, UserRoles = userRoles }
-                ).Where(userAndroles => userAndroles.UserRoles.RoleId == request.RoleId).ToListAsync();
-
+            
+            var data = _context.Users.Join(_context.UserRoles, user => user.Id, userRoles => userRoles.UserId, (user, userRoles) => new { User = user, UserRoles = userRoles }
+                ).Where(userandroles => request.RoleId.Contains(userandroles.UserRoles.RoleId)).GroupBy(car => car.User.Id).Select(g => g.First()).ToList();
+          
 
             var users = new List<UserModel>();
 
@@ -28,6 +29,7 @@ namespace AnyBuyStore.Core.Handlers.UserHandler.Queries.GetAllUserByRoles
 
                 foreach (var user in data)
                 {
+                    var roles = await _context.UserRoles.Join(_context.Roles, userRole => userRole.RoleId, roles => roles.Id, (userRole, roles) => new { UserRole = userRole, Roles = roles }).Where(userAndroles => userAndroles.UserRole.UserId == user.UserRoles.UserId).Select(a => a.Roles.Name).ToListAsync();
                     users.Add(new UserModel()
                     {
                         Id = user.User.Id,
@@ -37,6 +39,7 @@ namespace AnyBuyStore.Core.Handlers.UserHandler.Queries.GetAllUserByRoles
                         Age = user.User.Age,
                         Gender = user.User.Gender,
                         PhoneNumber = user.User.PhoneNumber,
+                        Roles = roles
                     });
                 }
 
@@ -48,6 +51,9 @@ namespace AnyBuyStore.Core.Handlers.UserHandler.Queries.GetAllUserByRoles
     {
         public int Id { get; set; }
         public int Role { get; set; }
+
+        public List<string>? Roles { get; set; }
+
         public string? PhoneNumber { get; set; }
 
         public string UserName { get; set; } = string.Empty;

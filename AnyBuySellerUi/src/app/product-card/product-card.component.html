@@ -8,7 +8,7 @@
             <div class="card-body">
                 <div class="clearfix mb-3">
                     <span class="float-start badge rounded-pill bg-success">{{Product?.price | currency:'INR'}}</span>
-                    <span class="float-end small text-muted text-uppercase">{{DiscountDetails.value | currency:'INR'}} OFF</span>
+                    <span class="float-end small text-muted text-uppercase">{{Product?.discountValue | currency:'INR'}} OFF</span>
                 </div>
                 <h3 class="card-title">
                     {{Product?.name}}

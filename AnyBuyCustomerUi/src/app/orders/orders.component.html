@@ -1,0 +1,65 @@
+<section class="page-header">
+  <div class="overly"></div>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-6">
+        <div class="content text-center">
+          <h1 class="mb-3">Order</h1>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-transparent justify-content-center">
+              <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="user-dashboard page-wrapper">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-md-7 col-sm-12 col-lg-9">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Order</th>
+              <th scope="col">product</th>
+              <th scope="col">Date</th>
+              <th scope="col">quantity</th>
+              <th scope="col">price</th>
+              <th scope="col">Total</th>
+              <th scope="col">Status</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor='let item of orderList'>
+              <th scope="row">#{{item.id}}</th>
+              <td>{{item.productName}} </td>
+              <td>{{item.updatedAt|date}} </td>
+              <td>{{item.quantity}}</td>
+              <td>{{item.price | currency:'INR'}}</td>
+              <td>{{item.quantity!*item.price! | currency:'INR'}}</td>
+              <td>{{item.status}}</td>
+              <div *ngIf="item.status =='delivered' ">
+                <td class="text-center border-none" style="color: red;">delivered</td>
+              </div>
+              <div *ngIf="item.status !='delivered' ">
+                <td class="border-none"><button (click)="deleteItemFromOrderDetails(item.id)" class="btn btn-dark btn-small ">cancel</button></td>
+              </div>
+
+            </tr>
+            <tr>
+              <td colspan="4" style="text-align:center;">total</td>
+              <td colspan="4" style="text-align:center;">{{totalPrice | currency:'INR'}}</td>
+            </tr>
+            <tr>
+              <td colspan="8" style="text-align:center;"><button class="btn btn-dark btn-small"
+                  (click)="onClickNavigate()">shop more</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>

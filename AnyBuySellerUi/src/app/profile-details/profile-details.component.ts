@@ -15,6 +15,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 export class ProfileDetailsComponent implements OnInit {
   UserDetials: UserModel = new UserModel;
+  hasChange: boolean = false;
 
   userForm: FormGroup = new FormGroup({
     id: new FormControl(''),
@@ -29,17 +30,28 @@ export class ProfileDetailsComponent implements OnInit {
   constructor(public userService: UserService, private router: Router, private authService: AuthenticationService, private formBuilder: FormBuilder) { }
 
   getuserDetails(id: number) {
-    this.userService.getById(id).subscribe(async result => {
+    this.userService.getById(id).subscribe( result => {
       this.UserDetials = result;
-      await this.setValuesInForm(result);
+       this.setValuesInForm(result);
+       this.onCreateGroupFormValueChange();
     });
   }
+
+  onCreateGroupFormValueChange(){
+    const initialValue = this.userForm.value
+    this.userForm.valueChanges.subscribe(value => {
+      this.hasChange = Object.keys(initialValue).some(key => this.userForm.value[key] != 
+                        initialValue[key])
+    });
+}
+
 
   get f(): { [key: string]: AbstractControl } {
     return this.userForm.controls;
   }
 
   updateUser = (updateFormValue: any) => {
+    if(this.hasChange==true){
     this.submitted = true;
     if (this.userForm.invalid) {
       return;
@@ -60,12 +72,14 @@ export class ProfileDetailsComponent implements OnInit {
       .subscribe({
         next: (_) => {
           alert("profile updated successfully");
+          this.getuserDetails(Number(localStorage.getItem('userId')));
         },
         error: (err: HttpErrorResponse) => {
           document.getElementById("danger-alert")!.style.display = "block";
           document.getElementById("danger-alert")!.innerHTML = " unsuccessfull, please check the details";
         }
       })
+    }
   }
 
   onReset(): void {

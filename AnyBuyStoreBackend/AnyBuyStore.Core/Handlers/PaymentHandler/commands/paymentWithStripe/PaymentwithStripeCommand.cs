@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Stripe;
+using Product = Stripe.Product;
 
 namespace AnyBuyStore.Core.Handlers.PaymentHandler.commands.paymentWithStripe
 {
@@ -29,26 +30,33 @@ namespace AnyBuyStore.Core.Handlers.PaymentHandler.commands.paymentWithStripe
         }
         public async Task<bool> Handle(PaymentwithStripeCommand command, CancellationToken cancellationToken)
         {
-            StripeConfiguration.SetApiKey("sk_test_51LLOM8SDnYiiSSr8ChYrlY4wbCqwIAibEgxuipG3lhRJOHMRfuJtHPD0SIf7GByNW45qSrkWnvcEXvtI4h5EApAv00C86TZUga");
+            StripeConfiguration.SetApiKey(_configuration.GetSection("secretStripeapiKey").Value);
 
             var customers = new CustomerService();
-            var charges = new ChargeService();
             var customer = customers.Create(new CustomerCreateOptions
             {
-               Email = command.In.CustomerEmail,
-               Source = command.In.Id,
+                Email = command.In.CustomerEmail,
+                Source = command.In.Id,
             });
 
-            var charge = charges.Create(new ChargeCreateOptions
+            var options = new PaymentIntentCreateOptions
             {
                 Amount = (long?)command.In.Amount,
-                Description = "Customer Purchase",
-                Currency = "INR",
-                ReceiptEmail = command.In.CustomerEmail,
+                Currency = "inr",
                 Customer = customer.Id,
-            });
+                PaymentMethodTypes = new List<string> { "card"},
+                Metadata = new Dictionary<string, string>{ {"OrderId",command.In.OrderId.ToString()}},
+    
+            };
+            var confirmOptions = new PaymentIntentConfirmOptions
+            {
+                PaymentMethod = "pm_card_visa",
+            };
 
-            if(charge.Status == "succeeded")
+            var service = new PaymentIntentService();
+            var paymentIntent = service.Create(options);
+            var paymentConfirm = service.Confirm(paymentIntent.Id,confirmOptions);
+            if (paymentConfirm != null)
             {
                 return true;
             }
@@ -56,35 +64,14 @@ namespace AnyBuyStore.Core.Handlers.PaymentHandler.commands.paymentWithStripe
             {
                 return false;
             }
-           
-            //var options = new ChargeCreateOptions
-            //{
-            //    Amount = (long?)command.In.Amount,
-            //    Currency = "INR",
-            //    Description = "Customer Purchase",
-            //    Source = command.In.Id,
-            //  //  Customer = command.In.CustomerId,
-            //    ReceiptEmail = command.In.CustomerEmail
-            //};
-
-            //var service = new ChargeService();
-            //Charge charge = service.Create(options);
-            //if (charge == null)
-            //{
-            //    return false;
-            //}
-            //else
-            //    return true;
-
         }
     }
     public class PaymentModel
     {
         public string Id { get; set; }
-        public  decimal Amount { get; set; }
-        public string CustomerId { get; set; }
+        public decimal Amount { get; set; }
         public string CustomerEmail { get; set; }
-
+        public int OrderId {get;set;}
     }
 
 }

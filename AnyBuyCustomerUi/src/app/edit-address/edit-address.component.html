@@ -1,0 +1,113 @@
+<section class="user-dashboard page-wrapper">
+  <h3>Address</h3>
+  <br>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-2" *ngFor="let addressType of  addressList">
+        <button class="btn btn-dark" (click)="onClickShowAddress(addressType.id)">{{addressType.addressType}}</button>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="alert alert-success custom-style" id="success-alert" role="alert" style="display: none;">
+    </div>
+    <div class="alert alert-danger custom-style" role="alert" id="danger-alert" style="display: none;">
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-7 col-sm-12 col-lg-9">
+        <div class="acccount-settings">
+          <form [formGroup]="AddressForm" autocomplete="off" novalidate (ngSubmit)="onSubmit(AddressForm.value) ">
+            <input type="hidden" formControlName="addressId" value="0">
+            <div class="form-row">
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label>House</label>
+                  <input type="text" class="form-control" id="house" formControlName="house"
+                    [ngClass]="{ 'is-invalid': submitted && f['house'].errors }">
+                  <div *ngIf="submitted && f['house'].errors" class="invalid-feedback">
+                    <div *ngIf="f['house'].errors['required']">house is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label>Street</label>
+                  <input type="text" class="form-control" id="street" formControlName="street"
+                    [ngClass]="{ 'is-invalid': submitted && f['street'].errors }">
+                  <div *ngIf="submitted && f['street'].errors" class="invalid-feedback">
+                    <div *ngIf="f['street'].errors['required']">street is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label>Country</label>
+                  <select class="form-select" [(ngModel)]="selectedCountry.id" formControlName="country" 
+                    (change)="onSelectState(selectedCountry.id)" aria-label="Default select example" id="country"
+                    [ngClass]="{ 'is-invalid': submitted && f['country'].errors }">
+                    <option *ngFor="let country of CountryList" value={{country.id}}>{{country.name}}</option>
+                  </select>
+                  <!-- <input type="text" class="form-control" placeholder="ahmedabad" id="city" formControlName="city" [ngClass]="{ 'is-invalid': submitted && f['city'].errors }"> -->
+                  <div *ngIf="submitted && f['country'].errors" class="invalid-feedback">
+                    <div *ngIf="f['country'].errors['required']">country is required</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label>State</label>
+                  <select class="form-select" [(ngModel)]="selectedState.id" aria-label="Default select example"
+                    (change)="onSelectCity(selectedState.id)" id="state" formControlName="state"
+                    [ngClass]="{ 'is-invalid': submitted && f['state'].errors }">
+                    <option *ngFor="let state of StateList" value={{state.id}}>{{state.name}}</option>
+                  </select>
+                  <div *ngIf="submitted && f['state'].errors" class="invalid-feedback">
+                    <div *ngIf="f['state'].errors['required']">state is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label>City</label>
+                  <select class="form-select" aria-label="Default select example" id="city" formControlName="city"
+                    [ngClass]="{ 'is-invalid': submitted && f['city'].errors }">
+                    <option *ngFor="let city of CityList" value={{city.id}}>{{city.name}}</option>
+                  </select>
+                  <div *ngIf="submitted && f['city'].errors" class="invalid-feedback">
+                    <div *ngIf="f['city'].errors['required']">city is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label>ZipCode</label>
+                  <input type="text" class="form-control" id="zipCode" formControlName="zipCode"
+                    [ngClass]="{ 'is-invalid': submitted && f['zipCode'].errors }">
+                  <div *ngIf="submitted && f['zipCode'].errors" class="invalid-feedback">
+                    <div *ngIf="f['zipCode'].errors['required']">zip is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label>Address type</label>
+                  <input type="text" class="form-control" placeholder="office" id="type" formControlName="type"
+                    [ngClass]="{ 'is-invalid': submitted && f['type'].errors }">
+                  <div *ngIf="submitted && f['type'].errors" class="invalid-feedback">
+                    <div *ngIf="f['type'].errors['required']">address type is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-dark" id="submitAddress" type="submit">Save Address</button>
+            &nbsp;
+            &nbsp;
+            &nbsp;
+            <button class="btn btn-dark" (click)="onReset()">clear</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

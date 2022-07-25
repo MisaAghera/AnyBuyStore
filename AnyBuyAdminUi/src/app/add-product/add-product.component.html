@@ -1,0 +1,91 @@
+<div class="container col-sm-6">
+    <h3>Product</h3><br>
+    <div class="alert alert-success custom-style" id="success-alert" role="alert" style="display: none;">
+    </div>
+    <div class="alert alert-danger custom-style" role="alert" id="danger-alert" style="display: none;">
+    </div>
+    
+    <div class="mb-3">
+        <label for="category" class="form-label">product category</label>
+        <select class="form-select" [(ngModel)]="selectedCategory.id" (change)="onSelectSubcategory(selectedCategory.id)"
+            aria-label="Default select example" id="category">
+            <option selected>select</option>
+            <option *ngFor="let category of Categorylist" value={{category.id}}>{{category.name}}</option>
+        </select>
+    </div>
+    
+    <form [formGroup]="newProductForm" autocomplete="off" novalidate (ngSubmit)="onSubmit(newProductForm.value) ">
+        <input type="hidden" formControlName="productId" value="0">
+        <div class="mb-3">
+            <label for="subcategory" class="form-label">product subcategory</label>
+            <select class="form-select" aria-label="Default select example" id="subcategory" formControlName="subcategory" [ngClass]="{ 'is-invalid': submitted && f['subcategory'].errors }">
+                <option selected>select</option>
+                <option *ngFor="let subcategory of SubcategoryList" value={{subcategory.id}}>{{subcategory.name}}</option>
+            </select>
+            <div *ngIf="submitted && f['subcategory'].errors" class="invalid-feedback">
+                <div *ngIf="f['subcategory'].errors['required']">subcategory is required</div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="discount" class="form-label">discount</label>
+            <select class="form-select" aria-label="Default select example" id="discount" formControlName="discount">
+                <option *ngFor="let discount of DiscountList" value={{discount.id}}>{{discount.type}} value =
+                    {{discount.value |
+                    currency : "INR"}}</option>
+            </select>
+        </div>
+    
+        <div class=" mb-3">
+            <label for="productName" class="form-label">name</label>
+            <input type="text" class="form-control" id="productName" formControlName="productName" [ngClass]="{ 'is-invalid': submitted && f['productName'].errors }">
+            <div *ngIf="submitted && f['productName'].errors" class="invalid-feedback">
+                <div *ngIf="f['productName'].errors['required']">name is required</div>
+            </div>
+        </div>
+    
+        <div class=" mb-3">
+            <label for="productDescription">description</label>
+            <textarea class="form-control" id="productDescription" formControlName="productDescription" rows="3" [ngClass]="{ 'is-invalid': submitted && f['productDescription'].errors }"></textarea>
+            <div *ngIf="submitted && f['productDescription'].errors" class="invalid-feedback">
+                <div *ngIf="f['productDescription'].errors['required']">description is required</div>
+            </div>
+        </div>
+    
+        <div class="mb-3 ">
+            <label for="price">price</label>
+            <input type="text" id="price" class="form-control" formControlName="price" aria-label="rupees amount" [ngClass]="{ 'is-invalid': submitted && f['price'].errors }"/>
+            <div *ngIf="submitted && f['price'].errors" class="invalid-feedback">
+                <div *ngIf="f['price'].errors['required']">price is required</div>
+            </div>
+        </div>
+    
+        <div class=" mb-3">
+            <label for="brand">brand</label>
+            <input type="text" class="form-control" id="brand" formControlName="brand"
+                aria-label="Amount (to the nearest dollar)" [ngClass]="{ 'is-invalid': submitted && f['brand'].errors }" />
+            <div *ngIf="submitted && f['brand'].errors" class="invalid-feedback">
+                <div *ngIf="f['brand'].errors['required']">brand is required</div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="quantity">quantity</label>
+            <div class="quantity d-flex align-items-center">
+                <input type="number" id="quantity" formControlName="quantity"
+                    class="input-text qty text form-control w-25 mr-3" step="1" min="1" name="quantity" value="1"
+                    title="Qty" size="4" [ngClass]="{ 'is-invalid': submitted && f['quantity'].errors }"/> 
+                <div *ngIf="submitted && f['quantity'].errors" class="invalid-feedback">
+                    <div *ngIf="f['quantity'].errors['required']">quantity is required</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="formFileSm" class="form-label">image</label>
+            <input class="form-control form-control-sm" (change)="onFileChanged($event)" id="productImg" formControlName="productImg" type="file">
+        </div>
+        <button type="submit">Create</button>
+    </form>
+</div>
+   

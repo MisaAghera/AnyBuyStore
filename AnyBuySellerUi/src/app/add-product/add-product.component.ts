@@ -63,10 +63,6 @@ export class AddProductComponent implements OnInit {
     });
   }
 
-  // onSelectFile(fileInput: any) {
-  //   this.selectedFile = <File>fileInput.target.files[0];
-  // }
-
   async getDiscounts(): Promise<void> {
     await this.DiscountsService.getAll().subscribe(result => {
       this.DiscountList = result;
@@ -101,7 +97,7 @@ export class AddProductComponent implements OnInit {
 
     
     if (this.productId == 0 || this.productId == null  ) {
-      await this.ProductService.add(formData).subscribe({
+       this.ProductService.add(formData).subscribe({
         next: (_) => {
           document.getElementById("success-alert")!.style.display = "block";
           document.getElementById("danger-alert")!.style.display = "none";
@@ -115,7 +111,7 @@ export class AddProductComponent implements OnInit {
     else {
       let productid = this.productId.toString();
       formData.append('id', productid);
-      await this.ProductService.update(formData).subscribe({
+       this.ProductService.update(formData).subscribe({
         next: (_) =>{
           document.getElementById("success-alert")!.style.display = "block";
           document.getElementById("danger-alert")!.style.display = "none";
@@ -129,7 +125,7 @@ export class AddProductComponent implements OnInit {
   }
 
   async getCategoryId(subcategoryId: number) {
-    await this.CategoriesService.getBySubCategoryId(subcategoryId).subscribe(async res => {
+     this.CategoriesService.getBySubCategoryId(subcategoryId).subscribe(async res => {
       this.selectedCategory.id = res;
       await this.onSelectSubcategory(this.selectedCategory.id);
     }
@@ -146,7 +142,6 @@ export class AddProductComponent implements OnInit {
     this.newProductForm.controls["brand"].setValue(res.brand);
     this.newProductForm.controls["quantity"].setValue(res.quantity);
     this.productId = res.id;
-   
   }
 
   async initialValues(productId: number) {
@@ -159,9 +154,7 @@ export class AddProductComponent implements OnInit {
     )
   }
 
- 
   ngOnInit(): void {
-
     this.newProductForm = this.formBuilder.group({
       productId:  [''],
       subcategory: ['', [Validators.required]],
@@ -173,7 +166,6 @@ export class AddProductComponent implements OnInit {
       quantity:  ['', [Validators.required]],
       productImg:['']
     });
-    
     this.authService.authChanged
       .subscribe(res => {
         this.isUserAuthenticated = res;
@@ -191,9 +183,9 @@ export class AddProductComponent implements OnInit {
         this.newProductForm.get('productImg')?.updateValueAndValidity();
       }
       this.initialValues(productId);
-
     });
   }
+  
   get f(): { [key: string]: AbstractControl } {
     return this.newProductForm.controls;
   }
@@ -203,7 +195,3 @@ export class AddProductComponent implements OnInit {
     this.newProductForm.reset();
   }
 }
-
-// class InModel {
-//   In: ProductModel = new ProductModel();
-// }

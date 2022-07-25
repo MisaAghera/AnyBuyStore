@@ -105,11 +105,8 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-//builder.Services.AddSwaggerGen();
 builder.Services.AddCors();
 var app = builder.Build();
-
-//StripeConfiguration.SetApiKey("sk_test_51LLOM8SDnYiiSSr8ChYrlY4wbCqwIAibEgxuipG3lhRJOHMRfuJtHPD0SIf7GByNW45qSrkWnvcEXvtI4h5EApAv00C86TZUga");
 
 
 // Configure the HTTP request pipeline.

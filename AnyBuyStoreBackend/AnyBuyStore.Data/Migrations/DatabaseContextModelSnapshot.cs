@@ -36,15 +36,13 @@ namespace AnyBuyStore.Data.Migrations
                         .HasColumnType("varchar(50)")
                         .HasColumnName("address_type");
 
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("varchar(200)")
-                        .HasColumnName("city");
+                    b.Property<int?>("CityId")
+                        .HasColumnType("int")
+                        .HasColumnName("city_id");
 
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("country");
+                    b.Property<int?>("CountryId")
+                        .HasColumnType("int")
+                        .HasColumnName("country_id");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2")
@@ -55,10 +53,9 @@ namespace AnyBuyStore.Data.Migrations
                         .HasColumnType("varchar(200)")
                         .HasColumnName("house");
 
-                    b.Property<string>("State")
-                        .IsRequired()
-                        .HasColumnType("varchar(200)")
-                        .HasColumnName("state");
+                    b.Property<int?>("StateId")
+                        .HasColumnType("int")
+                        .HasColumnName("state_id");
 
                     b.Property<string>("Street")
                         .IsRequired()
@@ -80,9 +77,75 @@ namespace AnyBuyStore.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("CountryId");
+
+                    b.HasIndex("StateId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Address");
+                });
+
+            modelBuilder.Entity("AnyBuyStore.Data.Data.Cities", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("name");
+
+                    b.Property<int>("StateId")
+                        .HasColumnType("int")
+                        .HasColumnName("State_id");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StateId");
+
+                    b.ToTable("Cities");
+                });
+
+            modelBuilder.Entity("AnyBuyStore.Data.Data.Countries", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("name");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Countries");
                 });
 
             modelBuilder.Entity("AnyBuyStore.Data.Data.Discount", b =>
@@ -141,10 +204,6 @@ namespace AnyBuyStore.Data.Migrations
                     b.Property<decimal?>("TotalAmount")
                         .HasColumnType("decimal(18,2)")
                         .HasColumnName("total_amount");
-
-                    b.Property<decimal?>("TotalDiscount")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("total_discount");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2")
@@ -407,6 +466,39 @@ namespace AnyBuyStore.Data.Migrations
                     b.ToTable("RefreshToken");
                 });
 
+            modelBuilder.Entity("AnyBuyStore.Data.Data.States", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int")
+                        .HasColumnName("Country_id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("name");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
+
+                    b.ToTable("States");
+                });
+
             modelBuilder.Entity("AnyBuyStore.Data.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -616,11 +708,40 @@ namespace AnyBuyStore.Data.Migrations
 
             modelBuilder.Entity("AnyBuyStore.Data.Data.Address", b =>
                 {
+                    b.HasOne("AnyBuyStore.Data.Data.Cities", "Cities")
+                        .WithMany("Address")
+                        .HasForeignKey("CityId");
+
+                    b.HasOne("AnyBuyStore.Data.Data.Countries", "Countries")
+                        .WithMany("Address")
+                        .HasForeignKey("CountryId");
+
+                    b.HasOne("AnyBuyStore.Data.Data.States", "States")
+                        .WithMany("Address")
+                        .HasForeignKey("StateId");
+
                     b.HasOne("AnyBuyStore.Data.Models.User", "User")
                         .WithMany("Address")
                         .HasForeignKey("UserId");
 
+                    b.Navigation("Cities");
+
+                    b.Navigation("Countries");
+
+                    b.Navigation("States");
+
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("AnyBuyStore.Data.Data.Cities", b =>
+                {
+                    b.HasOne("AnyBuyStore.Data.Data.States", "States")
+                        .WithMany("Cities")
+                        .HasForeignKey("StateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("States");
                 });
 
             modelBuilder.Entity("AnyBuyStore.Data.Data.Order", b =>
@@ -724,6 +845,17 @@ namespace AnyBuyStore.Data.Migrations
                     b.Navigation("ProductCategory");
                 });
 
+            modelBuilder.Entity("AnyBuyStore.Data.Data.States", b =>
+                {
+                    b.HasOne("AnyBuyStore.Data.Data.Countries", "Countries")
+                        .WithMany("States")
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Countries");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", null)
@@ -780,6 +912,18 @@ namespace AnyBuyStore.Data.Migrations
                     b.Navigation("Order");
                 });
 
+            modelBuilder.Entity("AnyBuyStore.Data.Data.Cities", b =>
+                {
+                    b.Navigation("Address");
+                });
+
+            modelBuilder.Entity("AnyBuyStore.Data.Data.Countries", b =>
+                {
+                    b.Navigation("Address");
+
+                    b.Navigation("States");
+                });
+
             modelBuilder.Entity("AnyBuyStore.Data.Data.Discount", b =>
                 {
                     b.Navigation("OrderDetails");
@@ -807,6 +951,13 @@ namespace AnyBuyStore.Data.Migrations
             modelBuilder.Entity("AnyBuyStore.Data.Data.ProductSubcategory", b =>
                 {
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("AnyBuyStore.Data.Data.States", b =>
+                {
+                    b.Navigation("Address");
+
+                    b.Navigation("Cities");
                 });
 
             modelBuilder.Entity("AnyBuyStore.Data.Models.User", b =>
